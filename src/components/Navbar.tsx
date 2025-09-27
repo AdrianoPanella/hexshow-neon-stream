@@ -1,4 +1,5 @@
 import { Search, Bell, ChevronDown, Play, Info, Plus } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,12 +10,14 @@ import {
 import hexShowLogo from '@/assets/hexshow-logo.png';
 
 const Navbar = () => {
+  const location = useLocation();
+  
   const navLinks = [
-    { name: 'Home', href: '/', active: true },
-    { name: 'Series', href: '/series' },
-    { name: 'Movies', href: '/movies' },
-    { name: 'New & Popular', href: '/new' },
-    { name: 'My List', href: '/my-list' },
+    { name: 'Home', href: '/', active: location.pathname === '/' },
+    { name: 'Series', href: '/series', active: location.pathname === '/series' },
+    { name: 'Movies', href: '/movies', active: location.pathname === '/movies' },
+    { name: 'New & Popular', href: '/new', active: location.pathname === '/new' },
+    { name: 'My List', href: '/my-list', active: location.pathname === '/my-list' },
   ];
 
   return (
@@ -23,7 +26,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-8">
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <img 
                 src={hexShowLogo} 
                 alt="HexShow" 
@@ -32,22 +35,22 @@ const Navbar = () => {
               <span className="font-brand text-xl font-bold text-neon-green">
                 HexShow
               </span>
-            </div>
+            </Link>
 
             {/* Navigation Links - Hidden on mobile */}
             <div className="hidden lg:flex space-x-6">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   className={`text-sm font-medium transition-colors hover:text-neon-green ${
                     link.active 
-                      ? 'text-neon-green' 
+                      ? 'text-neon-green border-b-2 border-neon-green pb-4' 
                       : 'text-muted-foreground'
                   }`}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

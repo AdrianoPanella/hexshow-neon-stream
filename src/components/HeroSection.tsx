@@ -1,6 +1,8 @@
 import { Play, Plus, Info } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ContentItem } from '@/data/mockData';
+import { addToList } from '@/store/listsStore';
 import cyberBg from '@/assets/cyber-bg.jpg';
 
 interface HeroSectionProps {
@@ -8,6 +10,19 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ content }: HeroSectionProps) => {
+  const navigate = useNavigate();
+
+  const handleWatchNow = () => {
+    if (content.videoUrl) {
+      navigate(`/watch/${content.id}`);
+    }
+  };
+
+  const handleAddToList = () => {
+    addToList('My List', content.id);
+    // You could add a toast notification here
+  };
+
   return (
     <div className="relative h-screen w-full overflow-hidden">
       {/* Background Image */}
@@ -59,13 +74,16 @@ const HeroSection = ({ content }: HeroSectionProps) => {
             {/* Action Buttons */}
             <div className="flex gap-4 pt-4">
               <Button 
-                className="bg-neon-green hover:bg-neon-green/90 text-black font-semibold px-8 py-3 text-base transition-all hover:scale-105 hover:glow-neon-green"
+                onClick={handleWatchNow}
+                disabled={!content.videoUrl}
+                className="bg-neon-green hover:bg-neon-green/90 text-black font-semibold px-8 py-3 text-base transition-all hover:scale-105 hover:glow-neon-green disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Play className="w-5 h-5 mr-2 fill-current" />
                 Watch Now
               </Button>
               
               <Button 
+                onClick={handleAddToList}
                 variant="outline" 
                 className="border-2 border-neon-purple hover:border-neon-purple hover:bg-neon-purple/10 text-neon-purple hover:text-neon-purple px-8 py-3 text-base transition-all hover:scale-105"
               >

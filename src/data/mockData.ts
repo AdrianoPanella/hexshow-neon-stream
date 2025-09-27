@@ -10,6 +10,10 @@ export interface ContentItem {
   duration: string;
   type: 'movie' | 'series';
   progress?: number; // For continue watching
+  videoUrl: string; // Real video URL for playback
+  durationSec: number; // Duration in seconds
+  releaseDate: string; // YYYY-MM-DD format
+  isNew?: boolean; // Flag for new content
 }
 
 export interface ContentRow {
@@ -18,7 +22,7 @@ export interface ContentRow {
   items: ContentItem[];
 }
 
-// Mock data for HexShow streaming platform
+// Mock data for HexShow streaming platform with real video URLs
 export const mockContent: ContentItem[] = [
   {
     id: '1',
@@ -30,7 +34,11 @@ export const mockContent: ContentItem[] = [
     rating: 8.9,
     year: 2024,
     duration: '2h 15m',
-    type: 'movie'
+    type: 'movie',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    durationSec: 8100,
+    releaseDate: '2024-01-15',
+    isNew: true
   },
   {
     id: '2',
@@ -42,7 +50,11 @@ export const mockContent: ContentItem[] = [
     rating: 8.7,
     year: 2024,
     duration: '1 Season',
-    type: 'series'
+    type: 'series',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    durationSec: 3600,
+    releaseDate: '2024-02-10',
+    isNew: true
   },
   {
     id: '3',
@@ -55,7 +67,11 @@ export const mockContent: ContentItem[] = [
     year: 2024,
     duration: '2 Seasons',
     type: 'series',
-    progress: 65
+    progress: 65,
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    durationSec: 2700,
+    releaseDate: '2024-03-01',
+    isNew: true
   },
   {
     id: '4',
@@ -67,7 +83,11 @@ export const mockContent: ContentItem[] = [
     rating: 9.1,
     year: 2024,
     duration: '2h 45m',
-    type: 'movie'
+    type: 'movie',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    durationSec: 9900,
+    releaseDate: '2024-04-20',
+    isNew: true
   },
   {
     id: '5',
@@ -79,7 +99,11 @@ export const mockContent: ContentItem[] = [
     rating: 8.8,
     year: 2024,
     duration: '1 Season',
-    type: 'series'
+    type: 'series',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    durationSec: 3300,
+    releaseDate: '2024-05-15',
+    isNew: true
   },
   {
     id: '6',
@@ -92,7 +116,10 @@ export const mockContent: ContentItem[] = [
     year: 2023,
     duration: '2h 10m',
     type: 'movie',
-    progress: 32
+    progress: 32,
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+    durationSec: 7800,
+    releaseDate: '2023-11-10'
   },
   {
     id: '7',
@@ -104,7 +131,11 @@ export const mockContent: ContentItem[] = [
     rating: 8.4,
     year: 2024,
     duration: '2 Seasons',
-    type: 'series'
+    type: 'series',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    durationSec: 4200,
+    releaseDate: '2024-06-01',
+    isNew: true
   },
   {
     id: '8',
@@ -116,7 +147,11 @@ export const mockContent: ContentItem[] = [
     rating: 9.0,
     year: 2024,
     duration: '1h 55m',
-    type: 'movie'
+    type: 'movie',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+    durationSec: 6900,
+    releaseDate: '2024-07-12',
+    isNew: true
   },
   {
     id: '9',
@@ -129,7 +164,10 @@ export const mockContent: ContentItem[] = [
     year: 2023,
     duration: '3 Seasons',
     type: 'series',
-    progress: 78
+    progress: 78,
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    durationSec: 5400,
+    releaseDate: '2023-09-05'
   },
   {
     id: '10',
@@ -141,7 +179,11 @@ export const mockContent: ContentItem[] = [
     rating: 8.9,
     year: 2024,
     duration: '2h 20m',
-    type: 'movie'
+    type: 'movie',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+    durationSec: 8400,
+    releaseDate: '2024-08-25',
+    isNew: true
   }
 ];
 
@@ -165,12 +207,7 @@ export const contentRows: ContentRow[] = [
   {
     id: 'new-releases',
     title: 'New Releases',
-    items: mockContent.filter(item => item.year === 2024).slice(0, 8)
-  },
-  {
-    id: 'continue-watching',
-    title: 'Continue Watching',
-    items: mockContent.filter(item => item.progress).slice(0, 6)
+    items: mockContent.filter(item => item.isNew || item.year === 2024).slice(0, 8)
   },
   {
     id: 'sci-fi',
