@@ -1,12 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import ContentCarousel from '@/components/ContentCarousel';
+import Footer from '@/components/Footer';
+import { contentRows, featuredContent } from '@/data/mockData';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <Navbar />
+      
+      {/* Hero Section */}
+      <HeroSection content={featuredContent} />
+      
+      {/* Content Rows */}
+      <div className="space-y-8 pb-12">
+        {contentRows.map((row) => (
+          <ContentCarousel key={row.id} row={row} />
+        ))}
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
